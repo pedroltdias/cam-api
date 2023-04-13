@@ -21,7 +21,7 @@ class Funcionario(models.Model):
     def __str__(self):
         return self.nome
 
-class Projetos(models.Model):
+class Projeto(models.Model):
     nome = models.CharField(max_length=255, unique=True)
     horas_necessarias = models.IntegerField()
     prazo_estimado = models.DateField()
