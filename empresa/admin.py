@@ -16,3 +16,11 @@ class Funcionarios(admin.ModelAdmin):
     list_per_page = 20
 
 admin.site.register(Funcionario, Funcionarios)
+
+class Projetos(admin.ModelAdmin):
+    list_display = ('id', 'nome', 'horas_necessarias', 'prazo_estimado', 'horas_realizadas', 'ultima_atualizacao')
+    list_display_links = ('id', 'nome')
+    search_fields = ('id', 'nome',)
+    list_per_page = 20
+
+admin.site.register(Projeto, Projetos)
