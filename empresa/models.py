@@ -41,3 +41,11 @@ class Projeto(models.Model):
 
     def __str__(self):
         return self.nome
+    
+class ParticipacaoProjeto(models.Model):
+    funcionario = models.ForeignKey('Funcionario', on_delete=models.CASCADE)
+    projeto = models.ForeignKey('Projeto', on_delete=models.CASCADE)
+    hora_trabalhadas = models.DecimalField(max_digits=6, decimal_places=2)
+    
+    class Meta:
+        unique_together = ('funcionario', 'projeto')
