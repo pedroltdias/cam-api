@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from empresa.views import DepartamentoViewSet, FuncionarioViewSet, ProjetoViewSet, ListaFuncionariosDepartamento
+from empresa.views import DepartamentoViewSet, FuncionarioViewSet, ProjetoViewSet, ListaFuncionariosDepartamento, ListaProjetosDepartamento
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -27,5 +27,6 @@ router.register('projetos', ProjetoViewSet, basename='Projetos')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('departamento/<int:pk>/funcionarios/', ListaFuncionariosDepartamento.as_view())
+    path('departamento/<int:pk>/funcionarios/', ListaFuncionariosDepartamento.as_view()),
+    path('departamento/<int:pk>/projetos/', ListaProjetosDepartamento.as_view())
 ]

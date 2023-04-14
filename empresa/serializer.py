@@ -17,9 +17,16 @@ class ProjetoSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class ListaFuncionariosDepartamentoSerializer(serializers.ModelSerializer):
-    # departamento = serializers.ReadOnlyField(source='departamento.nome')
-    # funcionario = serializers.SerializerMethodField()
+    sexo = serializers.SerializerMethodField()
     class Meta:
         model = Funcionario
-        fields = ['nome']
+        fields = ['nome', 'cpf', 'sexo', 'salario']
         
+    def get_sexo(self, obj):
+        return obj.get_sexo_display()
+    
+class ListaProjetoDepartamentoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Projeto
+        fields = ['nome', 'supervisor', 'horas_necessarias', 'horas_realizadas', 'prazo_estimado', 'ultima_atualizacao']
+    
