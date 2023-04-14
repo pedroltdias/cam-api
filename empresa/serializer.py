@@ -4,14 +4,22 @@ from empresa.models import Departamento, Funcionario, Projeto
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departamento
-        fields = ['id', 'nome']
+        fields = '__all__'
 
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funcionario
-        fields = ['id', 'nome', 'cpf', 'rg', 'sexo', 'data_nascimento', 'habilitacao', 'salario', 'carga_horaria_semanal']
+        fields = '__all__'
 
 class ProjetoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projeto
-        fields = ['id', 'horas_necessarias', 'prazo_estimado', 'horas_realizadas', 'ultima_atualizacao']
+        fields = '__all__'
+        
+class ListaFuncionariosDepartamentoSerializer(serializers.ModelSerializer):
+    # departamento = serializers.ReadOnlyField(source='departamento.nome')
+    # funcionario = serializers.SerializerMethodField()
+    class Meta:
+        model = Funcionario
+        fields = ['nome']
+        

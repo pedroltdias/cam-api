@@ -1,6 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from empresa.models import Departamento, Funcionario, Projeto
-from empresa.serializer import DepartamentoSerializer, FuncionarioSerializer, ProjetoSerializer
+from empresa.serializer import DepartamentoSerializer, FuncionarioSerializer, ProjetoSerializer, ListaFuncionariosDepartamentoSerializer
 
 class DepartamentoViewSet(viewsets.ModelViewSet):
     """Exibindo todos os departamentos"""
@@ -16,3 +16,12 @@ class ProjetoViewSet(viewsets.ModelViewSet):
     """Exibindo todos os projetos"""
     queryset = Projeto.objects.all()
     serializer_class = ProjetoSerializer
+    
+class ListaFuncionariosDepartamento(generics.ListAPIView):
+    """Listando funcionários de um departamento"""
+    def get_queryset(self):
+        queryset = Funcionario.objects.filter(func_departamento_id=self.kwargs['pk'])
+        return queryset
+    serializer_class = ListaFuncionariosDepartamentoSerializer
+    
+    
