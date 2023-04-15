@@ -23,7 +23,6 @@ class ListaFuncionariosDepartamento(generics.ListAPIView):
         queryset = Funcionario.objects.filter(func_departamento_id=self.kwargs['pk'])
         return queryset
     serializer_class = ListaFuncionariosDepartamentoSerializer
-    
 
 class ListaProjetosDepartamento(generics.ListAPIView):
     """Listando projetos de um departamento"""

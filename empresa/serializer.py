@@ -2,35 +2,42 @@ from rest_framework import serializers
 from empresa.models import Departamento, Funcionario, Projeto
 from empresa.validators import *
 
-
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Departamento
         fields = ['id', 'nome']
-    
+
     def validate(self, data):
         if not nome_valido(data['nome']):
-            raise serializers.ValidationError({'nome': 'O nome de um departamento não pode conter números!'})
+            raise serializers.ValidationError(
+                {'nome': 'O nome de um departamento não pode conter números!'})
         return data
-
 
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funcionario
         exclude = ['func_departamento']
-        
+
     def validate(self, data):
         if not cpf_valido(data['cpf']):
             raise serializers.ValidationError({'cpf': 'CPF inválido!'})
         if not rg_valido(data['rg']):
-            raise serializers.ValidationError({'rg':"O RG deve ter 9 dígitos"})
+            raise serializers.ValidationError(
+                {'rg': "O RG deve ter 9 dígitos"})
         return data
-
 
 class ProjetoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projeto
-        exclude = ['departamento']        
+        exclude = ['horas_realizadas', 'ultima_atualizacao']
+        
+    def validate(self, data):
+        supervisor = data['supervisor']
+        horas_necessarias = data['horas_necessarias']
+        print(supervisor.carga_horaria_semanal)
+        if not supervisor.carga_horaria_semanal > horas_necessarias:
+            raise serializers.ValidationError("O funcionário não tem carga horária suficiente para supervisionar o projeto!")
+        return data
 
 class ListaFuncionariosDepartamentoSerializer(serializers.ModelSerializer):
     sexo = serializers.SerializerMethodField()
@@ -41,7 +48,6 @@ class ListaFuncionariosDepartamentoSerializer(serializers.ModelSerializer):
 
     def get_sexo(self, obj):
         return obj.get_sexo_display()
-
 
 class ListaProjetoDepartamentoSerializer(serializers.ModelSerializer):
     class Meta:

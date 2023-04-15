@@ -8,11 +8,7 @@ class Departamento(models.Model):
 
 
 class Funcionario(models.Model):
-    SEXOS = [
-        ('M', 'Masculino'),
-        ('F', 'Feminino'),
-        ('O', 'Outro')
-	]
+    SEXOS = [('M', 'Masculino'), ('F', 'Feminino'), ('O', 'Outro')]
 
     nome = models.CharField(max_length=255)
     cpf = models.CharField(max_length=11, unique=True)
