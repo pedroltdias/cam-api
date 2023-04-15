@@ -16,7 +16,7 @@ class DepartamentoSerializer(serializers.ModelSerializer):
 class FuncionarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Funcionario
-        exclude = ['func_departamento']
+        exclude = ['telefone', 'func_departamento']
 
     def validate(self, data):
         if not cpf_valido(data['cpf']):
@@ -54,3 +54,16 @@ class ListaProjetoDepartamentoSerializer(serializers.ModelSerializer):
         model = Projeto
         fields = ['nome', 'supervisor', 'horas_necessarias',
                   'horas_realizadas', 'prazo_estimado', 'ultima_atualizacao']
+
+class FuncionarioSerializerV2(serializers.ModelSerializer):
+    class Meta:
+        model = Funcionario
+        exclude = ['func_departamento']
+
+    def validate(self, data):
+        if not cpf_valido(data['cpf']):
+            raise serializers.ValidationError({'cpf': 'CPF inválido!'})
+        if not rg_valido(data['rg']):
+            raise serializers.ValidationError(
+                {'rg': "O RG deve ter 9 dígitos"})
+        return data

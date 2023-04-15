@@ -1,7 +1,7 @@
 from rest_framework import viewsets, generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from empresa.models import Departamento, Funcionario, Projeto
-from empresa.serializer import DepartamentoSerializer, FuncionarioSerializer, ProjetoSerializer, ListaFuncionariosDepartamentoSerializer, ListaProjetoDepartamentoSerializer
+from empresa.serializer import DepartamentoSerializer, FuncionarioSerializer, FuncionarioSerializerV2, ProjetoSerializer, ListaFuncionariosDepartamentoSerializer, ListaProjetoDepartamentoSerializer
 
 class DepartamentoViewSet(viewsets.ModelViewSet):
     """Exibindo todos os departamentos"""
@@ -14,11 +14,17 @@ class DepartamentoViewSet(viewsets.ModelViewSet):
 class FuncionarioViewSet(viewsets.ModelViewSet):
     """Exibindo todos os funcionários"""
     queryset = Funcionario.objects.all()
-    serializer_class = FuncionarioSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['nome', 'salario']
     search_fields = ['nome', 'cpf', 'rg']
     filterset_fields = ['habilitacao']
+    
+    def get_serializer_class(self):
+        if self.request.version == 'v2':
+            return FuncionarioSerializerV2
+        else:
+            return FuncionarioSerializer
+                     
     
 class ProjetoViewSet(viewsets.ModelViewSet):
     """Exibindo todos os projetos"""

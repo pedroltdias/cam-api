@@ -13,6 +13,7 @@ class Funcionario(models.Model):
     nome = models.CharField(max_length=255)
     cpf = models.CharField(max_length=11, unique=True)
     rg = models.CharField(max_length=10, unique=True)
+    telefone = models.CharField(max_length=11, default="")
     sexo = models.CharField(max_length=1, choices=SEXOS)
     data_nascimento = models.DateField()
     habilitacao = models.BooleanField(default=False)
