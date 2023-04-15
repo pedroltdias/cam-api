@@ -1,4 +1,5 @@
-from rest_framework import viewsets, generics
+from rest_framework import viewsets, generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from empresa.models import Departamento, Funcionario, Projeto
 from empresa.serializer import DepartamentoSerializer, FuncionarioSerializer, ProjetoSerializer, ListaFuncionariosDepartamentoSerializer, ListaProjetoDepartamentoSerializer
 
@@ -6,16 +7,26 @@ class DepartamentoViewSet(viewsets.ModelViewSet):
     """Exibindo todos os departamentos"""
     queryset = Departamento.objects.all()
     serializer_class = DepartamentoSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['nome']
+    search_fields = ['nome']
     
 class FuncionarioViewSet(viewsets.ModelViewSet):
     """Exibindo todos os funcionários"""
     queryset = Funcionario.objects.all()
     serializer_class = FuncionarioSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['nome', 'salario']
+    search_fields = ['nome', 'cpf', 'rg']
+    filterset_fields = ['habilitacao']
     
 class ProjetoViewSet(viewsets.ModelViewSet):
     """Exibindo todos os projetos"""
     queryset = Projeto.objects.all()
     serializer_class = ProjetoSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['nome', 'horas_necessarias']
+    search_fields = ['nome']
     
 class ListaFuncionariosDepartamento(generics.ListAPIView):
     """Listando funcionários de um departamento"""
@@ -23,6 +34,8 @@ class ListaFuncionariosDepartamento(generics.ListAPIView):
         queryset = Funcionario.objects.filter(func_departamento_id=self.kwargs['pk'])
         return queryset
     serializer_class = ListaFuncionariosDepartamentoSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ['nome', 'salario']
 
 class ListaProjetosDepartamento(generics.ListAPIView):
     """Listando projetos de um departamento"""
