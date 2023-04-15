@@ -6,6 +6,7 @@ class Departamentos(admin.ModelAdmin):
     list_display_links = ('id', 'nome')
     search_fields = ('nome',)
     list_per_page = 20
+    ordering = ('nome',)
     
 admin.site.register(Departamento, Departamentos)
 
@@ -14,6 +15,7 @@ class Funcionarios(admin.ModelAdmin):
     list_display_links = ('id', 'nome', 'cpf', 'rg', 'data_nascimento')
     search_fields = ('id', 'nome', 'cpf', 'rg',)
     list_per_page = 20
+    ordering = ('nome',)
 
 admin.site.register(Funcionario, Funcionarios)
 
@@ -22,5 +24,6 @@ class Projetos(admin.ModelAdmin):
     list_display_links = ('id', 'nome')
     search_fields = ('id', 'nome',)
     list_per_page = 20
+    ordering = ('nome',)
 
 admin.site.register(Projeto, Projetos)
