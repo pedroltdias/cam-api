@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date, timedelta
 
 class Departamento(models.Model):
     nome = models.CharField(max_length=255, unique=True)
@@ -28,8 +29,8 @@ class Projeto(models.Model):
     nome = models.CharField(max_length=255, unique=True)
     horas_necessarias = models.IntegerField()
     prazo_estimado = models.DateField()
-    horas_realizadas = models.IntegerField()
-    ultima_atualizacao = models.DateField()
+    horas_realizadas = models.IntegerField(default=0)
+    ultima_atualizacao = models.DateField(default=date.today)
     departamento = models.ForeignKey(Departamento, on_delete=models.SET_NULL, null=True, related_name='projetos')
     supervisor = models.ForeignKey(Funcionario, on_delete=models.SET_NULL, null=True, related_name='projeto_supervisor')
     funcionarios = models.ManyToManyField(Funcionario, related_name='projeto_funcionarios')
@@ -39,4 +40,3 @@ class Projeto(models.Model):
 
     def __str__(self):
         return self.nome
-    

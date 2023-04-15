@@ -35,9 +35,14 @@ class ProjetoSerializer(serializers.ModelSerializer):
         supervisor = data['supervisor']
         horas_necessarias = data['horas_necessarias']
         print(supervisor.carga_horaria_semanal)
-        if not supervisor.carga_horaria_semanal > horas_necessarias:
+        if not (supervisor.carga_horaria_semanal * 4) > horas_necessarias:
             raise serializers.ValidationError("O funcionário não tem carga horária suficiente para supervisionar o projeto!")
         return data
+    
+class ProjetoGetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Projeto
+        fields = '__all__'
 
 class ListaFuncionariosDepartamentoSerializer(serializers.ModelSerializer):
     sexo = serializers.SerializerMethodField()
