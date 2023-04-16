@@ -70,8 +70,6 @@ class ProjetoViewSet(viewsets.ModelViewSet):
     #     else:
     #         return ProjetoSerializer
         
-    
-
     #Override
     def perform_create(self, serializer):
         print('hello 1')
@@ -80,6 +78,7 @@ class ProjetoViewSet(viewsets.ModelViewSet):
 
     #Override
     def perform_update(self, serializer):
+        print('hello update')
         projeto = serializer.save()
         self.calcular_prazo_estimado(projeto)
 
@@ -95,6 +94,7 @@ class ProjetoViewSet(viewsets.ModelViewSet):
             data_atual = datetime.now().date()
             data_estimada = data_atual + timedelta(weeks=semanas_restantes)
             projeto.prazo_estimado = data_estimada
+            print(data_estimada)
         projeto.save()
 
     # def create(self, request):
