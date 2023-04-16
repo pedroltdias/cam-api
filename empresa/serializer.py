@@ -29,7 +29,7 @@ class FuncionarioSerializer(serializers.ModelSerializer):
 class ProjetoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projeto
-        exclude = ['horas_realizadas', 'ultima_atualizacao']
+        exclude = ['prazo_estimado', 'horas_realizadas', 'ultima_atualizacao']
         
     def validate(self, data):
         supervisor = data['supervisor']
