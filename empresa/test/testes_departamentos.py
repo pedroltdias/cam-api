@@ -28,3 +28,16 @@ class DepartamentoTestCase(APITestCase):
 
 		response = self.client.post(self.list_url, data=data)
 		self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+
+	def test_requisicao_delete_para_deletar_departamentos(self):
+		"""Teste para verificar a requisicao DELETE para criar um departamento"""
+		response = self.client.delete('/departamentos/1/')
+		self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+	
+	def test_requisicao_put_para_alterar_departamentos(self):
+		"""Teste para verificar a requisicao PUT para atualizar um departamento"""
+		data = {
+			'nome': 'DepartamentoAtualizado'
+		}
+		response = self.client.put('/departamentos/1/', data=data)
+		self.assertEquals(response.status_code, status.HTTP_200_OK)
