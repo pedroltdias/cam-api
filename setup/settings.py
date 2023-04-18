@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 	'rest_framework',
     'empresa',
     'django_filters',
-    'corsheaders'
+    'corsheaders',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
